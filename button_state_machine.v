@@ -1,9 +1,9 @@
 `timescale 1ns / 100ps
 
-module button_decoder(CLK, RESET, PB, DPB, SHORT, LONG);
+module button_decoder(CLK, RESET, PB, SHORT, LONG);
 
 input CLK, RESET, PB;
-output DPB, SHORT, LONG;
+output SHORT, LONG;
 
 reg [5:0] state;
 reg [27:0] counter;
@@ -98,8 +98,8 @@ always @(posedge CLK, posedge RESET)
 					//NSL
 					if(!PB)
 					 	begin
-					 		state <= LONG;
-					 	end
+					 		state <= LONG
+;					 	end
 				end
 
 				LONG: begin

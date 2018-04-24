@@ -3,7 +3,7 @@
 // VGA verilog template
 // Author:  Da Cheng
 //////////////////////////////////////////////////////////////////////////////////
-module vga_demo(ClkPort, LETTER, BtnC, vga_h_sync, vga_v_sync, vga_r, vga_g, vga_b,
+module vga(ClkPort, LETTER, BtnC, vga_h_sync, vga_v_sync, vga_r, vga_g, vga_b,
 	St_ce_bar, St_rp_bar, Mt_ce_bar, Mt_St_oe_bar, Mt_St_we_bar,
 	);
 	input ClkPort;
