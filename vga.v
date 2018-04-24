@@ -4,9 +4,8 @@
 // Author:  Da Cheng
 //////////////////////////////////////////////////////////////////////////////////
 module vga(ClkPort, LETTER, BtnC, vga_h_sync, vga_v_sync, vga_r, vga_g, vga_b,
-	St_ce_bar, St_rp_bar, Mt_ce_bar, Mt_St_oe_bar, Mt_St_we_bar,
-	);
-	input ClkPort;
+	St_ce_bar, St_rp_bar, Mt_ce_bar, Mt_St_oe_bar, Mt_St_we_bar);
+	input ClkPort,BtnC;
 	input [4:0] LETTER;
 	output St_ce_bar, St_rp_bar, Mt_ce_bar, Mt_St_oe_bar, Mt_St_we_bar;
 	output vga_h_sync, vga_v_sync, vga_r, vga_g, vga_b;

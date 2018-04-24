@@ -3,19 +3,14 @@ module	morse_code_top
         MemOE, MemWR, RamCS, FlashCS, QuadSpiFlashCS,
         BtnL, BtnU, BtnR, BtnD, BtnC,	             // the Left, Up, Right, Down, and Center buttons
         Sw0, Sw1, Sw2, Sw3, Sw4, Sw5, Sw6, Sw7,     // 8 Switches
-        Ld0, Ld1, Ld2, Ld3, Ld4, Ld5, Ld6, Ld7,     // 8 LEDs
-		  An0, An1, An2, An3,                         // 4 seven-LEDs
-		  Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp,
 		  vga_r, vga_g, vga_b, vga_h_sync, vga_v_sync
 		  );
                                     
 	input    ClkPort;
 	input    BtnL, BtnU, BtnD, BtnR, BtnC;
 	input    Sw0, Sw1, Sw2, Sw3, Sw4, Sw5, Sw6, Sw7;
-	output   Ld0, Ld1, Ld2, Ld3, Ld4,Ld5, Ld6, Ld7;
-	output   An0, An1, An2, An3;
-	output   Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp;
-	  
+	input 	vga_r, vga_g, vga_b, vga_h_sync, vga_v_sync;
+
 	// ROM drivers: Control signals on Memory chips (to disable them) 	
 	output 	MemOE, MemWR, RamCS, FlashCS, QuadSpiFlashCS;  
 
@@ -29,6 +24,17 @@ module	morse_code_top
 	wire Short;
 	wire Long;
 	wire Strobe;
+	wire vga_r_l;
+	wire vga_g_l;
+	wire vga_b_l;
+	wire vga_h_sync_l;
+	wire vga_v_sync_l;
+	
+	assign vga_r_l = vga_r;
+	assign vga_g_l = vga_g;
+	assign vga_b_l = vga_b;
+	assign vga_h_sync_l = vga_h_sync;
+	assign vga_v_sync_l = vga_v_sync;
 
 	wire [4:0] Letter;
 	reg [4:0] VgaLetter;
@@ -47,11 +53,11 @@ module	morse_code_top
 	assign PbEnd = BtnL;
 	assign Clk   =  board_clk; 
 
-	button_decoder buttondecoder(.CLK(Clk), .RESET(Reset), PB(PbInput), .SHORT(Short), .LONG(Long));
+	button_sm buttonsm(.CLK(Clk), .RESET(Reset), .PB(PbInput), .SHORT(Short), .LONG(Long));
 
 	alphabet letterdecoder(.RESET(Reset), .Clk(Clk), .LONG(Long), .SHORT(Short), .END_CHAR(PbEnd), .LETTER(Letter), .STROBE(Strobe));
 
-	vga vgamodule(.ClkPort(Clk), .LETTER(VgaLetter), .BtnC(BtnC), .vga_h_sync(vga_h_sync), .vga_v_sync(vga_v_sync), .vga_r(vga_r), .vga_g(vga_g), .vga_b(vga_b),
+	vga vgamodule(.ClkPort(Clk), .LETTER(VgaLetter), .BtnC(BtnC), .vga_h_sync(vga_h_sync_l), .vga_v_sync(vga_v_sync_l), .vga_r(vga_r_l), .vga_g(vga_g_l), .vga_b(vga_b_l),
 	.St_ce_bar(), .St_rp_bar(), .Mt_ce_bar(), .Mt_St_oe_bar(), .Mt_St_we_bar());
 
 

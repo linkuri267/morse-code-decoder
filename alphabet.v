@@ -28,8 +28,12 @@ module alphabet(
     output STROBE
     );
 	 
-reg[4:0] STATE, LETTER;
-reg STROBE;
+reg[4:0] STATE, LETTER_REG;
+reg STROBE_REG;
+
+assign LETTER = LETTER_REG;
+assign STROBE = STROBE_REG;
+
 
 	 
 localparam
@@ -68,15 +72,15 @@ begin
 	if(RESET)
 	begin
 		STATE <= INIT;
-		STROBE <= 1'b0;
-		LETTER <= 5'b00000;
+		STROBE_REG <= 1'b0;
+		LETTER_REG <= 5'b00000;
 	end
 	else
 	begin
 		case(STATE)
 			INIT:
 			begin
-				STROBE <= 0;
+				STROBE_REG <= 0;
 				if(SHORT) STATE<=E;
 				if (LONG) STATE <=T;
 			end
@@ -85,157 +89,157 @@ begin
 				if(SHORT) STATE<=R;
 				if (LONG) STATE <=W;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			B:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			C:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			D:
 			begin
 				if(SHORT) STATE<=B;
 				if (LONG) STATE <=X;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			E:
 			begin
 				if(SHORT) STATE<=I;
 				if (LONG) STATE <=A;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			F:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			G:
 			begin
 				if(SHORT) STATE<=Z;
 				if (LONG) STATE <=Q;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			H:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			I:
 			begin
 				if(SHORT) STATE<=S;
 				if (LONG) STATE <=U;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			J:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			K:
 			begin
 				if(SHORT) STATE<=C;
 				if (LONG) STATE <=Y;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			L:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			M:
 			begin
 				if(SHORT) STATE<=G;
 				if (LONG) STATE <=O;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			N:
 			begin
 				if(SHORT) STATE<=D;
 				if (LONG) STATE <=K;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			O:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			P:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			Q:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			R:
 			begin
 				if(SHORT) STATE<=L;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			S:
 			begin
 				if(SHORT) STATE<=H;
 				if (LONG) STATE <=V;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			T:
 			begin
 				if(SHORT) STATE<=N;
 				if (LONG) STATE <=M;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			U:
 			begin
 				if(SHORT) STATE<=F;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			V:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			W:
 			begin
 				if(SHORT) STATE<=P;
 				if (LONG) STATE <=J;
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			X:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			Y:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
 			Z:
 			begin
 				if(END_CHAR) STATE<=DONE;
-				LETTER <= STATE;
+				LETTER_REG <= STATE;
 			end
-			DONE: STROBE <= 1'b1;
-			default: STATE <= XXXXX;
+			DONE: STROBE_REG <= 1'b1;
+			default: STATE <= 5'bXXXXX;
 		endcase
 	end
 end
